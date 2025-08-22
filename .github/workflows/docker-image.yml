@@ -24,7 +24,7 @@ jobs:
     - name: Build the Docker image
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
-         docker build -f /devops/docker/php8.1-fpm.dockerfile -t todo_php:8.1-fpm .
+         docker build -f devops/docker/php8.1-fpm.dockerfile -t todo_php:8.1-fpm .
 
     - name: Tag the image
       run: |
