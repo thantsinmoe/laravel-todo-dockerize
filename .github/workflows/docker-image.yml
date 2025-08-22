@@ -25,6 +25,8 @@ jobs:
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       run: |
          docker build -f devops/docker/php8.1-fpm.dockerfile -t todo_php:8.1-fpm .
+         working-directory: ${{ github.workspace }}
+
 
     - name: Tag the image
       run: |
