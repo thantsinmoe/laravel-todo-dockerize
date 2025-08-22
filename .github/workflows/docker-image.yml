@@ -8,12 +8,28 @@ on:
 
 jobs:
 
-  build:
-
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: checkout repo
+      uses: actions/checkout@v4
+
+    - name: Login dockerhub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
     - name: Build the Docker image
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      run: docker build -f /devops/docker/php8.1-fpm.dockerfile -t todo_php:8.1-fpm
+      run: |
+         docker build -f /devops/docker/php8.1-fpm.dockerfile -t todo_php:8.1-fpm .
+
+    - name: Tag the image
+      run: |
+         docker tag todo_php:8.1-fpm ${{ secrets.DOCKERHUB_USERNAME }}/todo_php:8.1-fpm
+
+    - name: Push the image to Docker Hub
+      run: |
+         docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo_php:8.1-fpm
