@@ -6,6 +6,7 @@ services:
     container_name: tsm_mysql               #Set container name     
     
     environment:                            #environment variables for env
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kt_laravel_db
       MYSQL_USER: kt_laravel_user
       MYSQL_PASSWORD: kt_laravel_password
@@ -14,7 +15,7 @@ services:
       - tsm_mysql_volume:/var/lib/mysql
       
     networks:                               #Set network for container
-      tsm_network
+      - tsm_network
 
   tsm_php:
     build:                                                  #Build specific image
